@@ -28,7 +28,11 @@ def home():
 # a second route!
 @app.route('/mcfc')
 def mancity():
-    headline = 'Manchester City beat Sporting Lisbon in the Champions League Round of 16!'
-    mcgoals = 'Five'
-    sportinggoals = 0
-    return render_template('soccer.html', headline=headline, mcfcg=mcgoals, slg=sportinggoals)
+    context = {
+        'headline': 'Manchester City beat Sporting Lisbon in the Champions League Round of 16!',
+        'mcfcg': 5,
+        'slg': 0,
+        'favorites': {'Joao Cancelo': 27, 'Ederson': 1, 'Fernandinho': 25, 'Phil Foden': 47, 'Kevin De Bruyne': 17},
+        'manager': 'Pep Guardiola'
+    }
+    return render_template('soccer.html', **context)
