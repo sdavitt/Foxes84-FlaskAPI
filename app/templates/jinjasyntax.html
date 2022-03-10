@@ -1,0 +1,14 @@
+{# An exploration of Jinja Templating #} {# This is a Jinja Comment #}
+
+{% if True %}
+    {# curly bracket percent sign is a Jinja statement aka similar to a python process (conditional or loop) #}
+    {# how are code blocks controlled? #}
+    {# in python, code blocks are controlled by indentation #}
+    {# does indentation matter in html? No. #}
+    {# how are code blocks controlled in jinja? They must be manually ended #}
+{% endif %}
+
+{% for x in range(5) %}
+    {# our jinja for loop here will make it's contents multiple times on the html page #}
+    <h1>Whoa</h1>
+{% endfor %}

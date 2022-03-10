@@ -1,1 +1,10 @@
-<h1>Manchester City is currently playing Sporting - aggregate score 5-0</h1>
+{% extends 'components/layout.html' %}
+
+{% block rightcol %}
+<h1>{{ headline }}</h1>
+<h3>The final score was {{ mcfcg }}-{{ slg }} on aggregate.</h3>
+{% endblock rightcol %}
+
+{% block leftcol %}
+<img src="https://images.daznservices.com/di/library/DAZN_News/8/25/mci-mun0603_v33em4l49t1b1vwb6ncgrkdek.jpg?t=1682123279&quality=60&h=450" alt="..." class="img-fluid">
+{% endblock leftcol %}
