@@ -14,8 +14,9 @@ from app import app # import the app variable defined in __init__.py
     # if your route's job is to display an html page -> it's return value should be a call to render_template
 from flask import render_template
 
-# import choice for our random behaviour
+# non-flask imports for route functionality
 from random import choice
+from .services import getActorImages # .services says "from the services file" rather than "from the services module"
 
 @app.route('/') # decorator says: this function is a route of the flask app 'app' with the url endpoint '/'
 def home():
@@ -36,3 +37,11 @@ def mancity():
         'manager': 'Pep Guardiola'
     }
     return render_template('soccer.html', **context)
+
+
+# gallery route
+@app.route('/actors')
+def gallery():
+    actors = getActorImages()
+    #print(actors)
+    return render_template('gallery.html', actors=actors)

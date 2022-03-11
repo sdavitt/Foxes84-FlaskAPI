@@ -1,0 +1,13 @@
+{% extends 'components/layout.html' %}
+{% block css %}
+<link rel="stylesheet" href="../static/css/gallery.css">
+{% endblock css%}
+
+{% block content %}
+<div class="gallery">
+    {% for i in range(9) %}
+      <div class="a{{i}}"><img class="img-fluid" src="{{ actors[i][1] }}" alt="{{ actors[i][0] }}"></div>
+    {% endfor %}
+    <div class="gallerytitle">Favorite Actors</div>
+</div>
+{% endblock content %}
