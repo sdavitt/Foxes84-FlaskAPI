@@ -4,10 +4,12 @@
 {% endblock css%}
 
 {% block content %}
-<div class="gallery">
+<div class="row justify-content-center">
+  <div class="gallery">
     {% for i in range(9) %}
-      <div class="a{{i}}"><img class="img-fluid" src="{{ actors[i][1] }}" alt="{{ actors[i][0] }}"></div>
+    <div class="a{{i}}"><img class="img-fluid" src="{{ actors[i][1] }}" alt="{{ actors[i][0] }}"></div>
     {% endfor %}
-    <div class="gallerytitle">Favorite Actors</div>
+    <div class="gallerytitle">Favorite Actors | Welcome back {{ welcomeback }}!</div>
+  </div>
 </div>
 {% endblock content %}

@@ -1,5 +1,6 @@
 # Additional classes and functions I wrote to make my routes easier
 # must install the requests package in our venv to use it
+from re import X
 import requests as r
 
 def getActorImages(): 
@@ -14,3 +15,4 @@ def getActorImages():
         if data[name]['image'] and name != 'Danny DeVito':
             actors.append((name, data[name]['image']))
     return actors
+

@@ -8,14 +8,17 @@
 
 # in order to do this we need a few tools
 # 1. we need access to our app
+from lib2to3.pgen2.driver import Driver
 from app import app # import the app variable defined in __init__.py
 # 2. we need the ability to show an html file at a specified url
     # render_template function
     # if your route's job is to display an html page -> it's return value should be a call to render_template
-from flask import render_template
+from flask import render_template, request
+from .forms import DriverForm
 
 # non-flask imports for route functionality
 from random import choice
+import requests as r
 from .services import getActorImages # .services says "from the services file" rather than "from the services module"
 
 @app.route('/') # decorator says: this function is a route of the flask app 'app' with the url endpoint '/'
@@ -44,4 +47,30 @@ def mancity():
 def gallery():
     actors = getActorImages()
     #print(actors)
-    return render_template('gallery.html', actors=actors)
+    return render_template('gallery.html', actors=actors, welcomeback='Lamont')
+
+# f1 driver info route
+# methods specify the acceptable methods of connection to this endpoint on our server
+    # methods defaults to just 'GET'
+@app.route('/f1', methods=['GET', 'POST'])
+def f1drivers():
+    form = DriverForm() # this form will be used in both the GET and POST sides of this route
+    # 2 scenarios here:
+        # 1. User is just accessing this page
+            # GET - getting data from the web server
+        # 2. User has submitted the form requesting certain driver information
+            # POST - sending data to the web server
+    if request.method == 'POST':
+        # this means the user has submitted the form
+        # Two possible behaviors
+            # user provided good form info (aka a real driver name)
+        data = r.get(f'https://ergast.com/api/f1/drivers/{form.drivername.data}.json').json()
+        if data['MRData']['total'] != '0':
+            # make api request and display relevant info
+            driver = data['MRData']['DriverTable']['Drivers'][0]
+        else:
+            # user provided bad form info
+            driver = form.drivername.data
+        # return a render_template with the relevant or lack of relevant driver data
+        return render_template('f1drivers.html', form=form, driver=driver) # after POST
+    return render_template('f1drivers.html', form=form, driver=None) # works for our GET requests
