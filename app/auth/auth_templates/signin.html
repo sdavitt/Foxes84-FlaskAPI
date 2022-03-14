@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Sign-in</h3>
+<form method="POST">
+    {{ siform.hidden_tag() }}
+    <div class='form-group'>
+        <fieldset id="username-field">
+            {{ siform.username.label }}
+            {{ siform.username(class='form-control', placeholder='Username...') }}
+        </fieldset>
+        <fieldset id="password-field">
+            {{ siform.password.label }}
+            {{ siform.password(class='form-control', placeholder='Password...') }}
+        </fieldset>
+        <br>
+        {{ siform.submit(class='btn btn-block btn-info') }}
+    </div>
+</form>
+<a class="btn btn-block btn-info" href="{{ url_for('auth.register') }}">Don't have an account?</a>
+{% endblock content %}

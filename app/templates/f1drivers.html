@@ -23,7 +23,18 @@
         {% if driver is string %}
             <h3>There are no F1 drivers with the last name {{ driver }}.</h3>
         {% elif driver %}
-            <h1>{{ driver }}</h1>
+        <div class="card">
+            <div class="card-header">
+                Driver Information:
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">ID:<span class='float-right'>{{ driver['permanentNumber'] }} {{ driver['code'] }}</span></li>
+                <li class="list-group-item">First Name:<span class='float-right'>{{ driver['givenName'] }}</span></li>
+                <li class="list-group-item">Last Name:<span class='float-right'>{{ driver['familyName'] }}</span></li>
+                <li class="list-group-item">DOB:<span class='float-right'>{{ driver['dateOfBirth'] }}</span></li>
+                <li class="list-group-item">Nationality:<span class='float-right'>{{ driver['nationality'] }}</span></li>
+            </ul>
+        </div>
         {% endif %}
     </div>
 </div>

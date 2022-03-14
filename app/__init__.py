@@ -4,12 +4,19 @@ from flask import Flask
 # from our config file import the Config class that we created
 from config import Config
 
+# import blueprints
+from .auth.routes import auth
+
 # define/instantiate our Flask object... aka tell the computer that this is a flask app
 app = Flask(__name__)
 
 # tell this app how it should be configured - over to the config.py file to set up for this!
 app.config.from_object(Config)
 # aka configure our flask app from the Config object we just wrote
+
+# create link of communication between blueprints and app
+# aka register the blueprints
+app.register_blueprint(auth)
 
 # our flask app is dumb! we need to tell it if any routes or models exist!
 # import the routes file here (must be after the definition and config of app)
