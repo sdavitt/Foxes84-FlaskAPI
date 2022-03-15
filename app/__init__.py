@@ -28,6 +28,9 @@ migrate = Migrate(app, db)
 
 # set up my login manager
 login.init_app(app)
+login.login_view = 'auth.signin'
+login.login_message = 'Please sign in to see this page.'
+login.login_message_category = 'danger'
 
 # our flask app is dumb! we need to tell it if any routes or models exist!
 # import the routes file here (must be after the definition and config of app)

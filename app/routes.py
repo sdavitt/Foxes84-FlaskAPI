@@ -8,7 +8,7 @@
 
 # in order to do this we need a few tools
 # 1. we need access to our app
-from lib2to3.pgen2.driver import Driver
+from flask_login import login_required
 from app import app # import the app variable defined in __init__.py
 # 2. we need the ability to show an html file at a specified url
     # render_template function
@@ -31,6 +31,7 @@ def home():
 
 # a second route!
 @app.route('/mcfc')
+@login_required
 def mancity():
     context = {
         'headline': 'Manchester City beat Sporting Lisbon in the Champions League Round of 16!',
@@ -44,6 +45,7 @@ def mancity():
 
 # gallery route
 @app.route('/actors')
+@login_required
 def gallery():
     actors = getActorImages()
     #print(actors)
