@@ -10,6 +10,7 @@ db = SQLAlchemy()
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash
 from uuid import uuid4
+from secrets import token_hex
 
 #import our LoginManager + tools
 from flask_login import LoginManager, UserMixin
@@ -33,6 +34,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50))
     password = db.Column(db.String(250), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.now(timezone.utc))
+    api_token = db.Column(db.String(32))
 
     def __init__(self, username, email, password, first_name='', last_name=''):
         self.username = username
@@ -41,6 +43,9 @@ class User(db.Model, UserMixin):
         self.last_name = last_name
         self.password = generate_password_hash(password)
         self.id = str(uuid4())
+
+    def generate_token(self):
+        self.api_token = token_hex(16)
 
 
 # new DB model for our animals
@@ -102,7 +107,33 @@ class Animal(db.Model):
             'weight': self.weight,
             'diet': self.diet,
             'habitat': self.habitat,
+            'description': self.description,
             'lifespan': self.lifespan
         }
+
+    def from_dict(self, dict):
+        """
+        works for the updateAnimal route - accepts the dictionary provided by the request and updates the animal with any present keys
+        """
+        if dict.get('name'):
+            self.name = dict['name'].title()
+        if dict.get('sci_name'):
+            self.sci_name = dict['sci_name'].title()
+        if dict.get('image'):
+            self.image = dict['image']
+        if dict.get('price'):
+            self.price = dict['price']
+        if dict.get('size'):
+            self.size = dict['size']
+        if dict.get('diet'):
+            self.diet = dict['diet']
+        if dict.get('weight'):
+            self.weight = dict['weight']
+        if dict.get('habitat'):
+            self.habitat = dict['habitat']
+        if dict.get('lifespan'):
+            self.lifespan = dict['lifespan']
+        if dict.get('description'):
+            self.description = dict['description']
 
 
