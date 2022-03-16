@@ -6,6 +6,7 @@ from config import Config
 
 # import blueprints
 from .auth.routes import auth
+from .api.routes import api
 
 # imports for database stuff + login manager
 from .models import db, login
@@ -21,6 +22,7 @@ app.config.from_object(Config)
 # create link of communication between blueprints and app
 # aka register the blueprints
 app.register_blueprint(auth)
+app.register_blueprint(api)
 
 # set up our ORM and Migrate connections
 db.init_app(app)
