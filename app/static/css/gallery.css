@@ -1,0 +1,36 @@
+.gallery {  display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 20px 1fr 1fr 1fr;
+    gap: 1em 1em;
+    grid-auto-flow: row;
+    margin: 1em;
+    grid-template-areas:
+      ". gallerytitle ."
+      "a0 a1 a2"
+      "a3 a4 a5"
+      "a6 a7 a8";
+  }
+
+  .a0 { grid-area: a0; }
+
+  .a1 { grid-area: a1; }
+  
+  .a2 { grid-area: a2; }
+  
+  .a3 { grid-area: a3; }
+  
+  .a4 { grid-area: a4; }
+  
+  .a5 { grid-area: a5; }
+  
+  .a6 { grid-area: a6; }
+  
+  .a7 { grid-area: a7; }
+  
+  .a8 { grid-area: a8; }
+  
+  .gallerytitle { 
+      grid-area: gallerytitle;
+      text-align: center;    
+}
+  

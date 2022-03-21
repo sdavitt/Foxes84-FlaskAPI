@@ -1,0 +1,77 @@
+{% extends 'components/layout.html' %}
+
+{% block content %}
+<!-- S1: User doesn't exist -->
+{% if not user %}
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h3>404: Whoops! This page doesn't exist.</h3>
+        </div>
+    </div>
+{% else %}
+    <!-- S2: Not signed in - other users page --> <!-- S3: Signed in - other users page -->
+    <!-- only separation of S2 and S3 is perhaps the behaviour of the follow button (that can be done in routing) -->
+    <!-- show the posts -->
+    <div class="row">
+        <div class="col-8">
+            {% if user.id == current_user.id %}
+            <form class="form-inline" method="POST">
+                {{ form.hidden_tag() }}
+                <div class='form-group'>
+                    <fieldset id="new_post-field">
+                        {{ form.new_post(class='form-control', placeholder='Post something...') }}
+                    </fieldset>
+                    <br>
+                    {{ form.submit(class='btn btn-info') }}
+                </div>
+            </form>
+            <hr>
+            {% endif %}   
+            {% if posts %}
+                {% for post in posts %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="m-0" >@{{user.username}}
+                        {% if user.id == current_user.id %}
+                        <a class="btn btn-sm btn-danger float-right" href="{{ url_for('blog.deletePost', pid=post.id) }}">Delete</a>
+                        {% endif %}
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                        <p>{{ post.body }}</p>
+                        <footer class="blockquote-footer"><cite title="Source Title">{{ post.timestamp }}</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <h3>{{ user.username }} has no posts.</h3>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">@{{ user.username }}</h5>
+                    <p class="card-text">User bio will go here</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{ user.first_name }} {{ user.last_name }}</li>
+                    <li class="list-group-item">Member since: <span class="float-right">{{ user.date_created }}</span></li>
+                </ul>
+                {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.signin') }}" class="btn btn-block btn-info">Sign in to follow</a>
+                {% elif user.id != current_user.id%}
+                <div class="card-body">
+                    {% if user in current_user.followed %}
+                    <a href="{{ url_for('blog.unfollow', uid=user.id) }}" class="btn btn-block btn-info">Unfollow</a>
+                    {% else %}
+                    <a href="{{ url_for('blog.follow', uid=user.id) }}" class="btn btn-block btn-info">Follow</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock content %}

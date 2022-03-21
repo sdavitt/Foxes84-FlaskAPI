@@ -1,0 +1,22 @@
+{% extends 'components/layout.html'%}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col">
+        <h1 id="welcomemsg">Hello, {{ name }}! Welcome to Flask :)</h1>
+    </div>
+    <div class="col">
+        {% if 'e' in name %}
+        <img class="img-fluid"
+            src="https://media.altpress.com/uploads/2018/07/Jack_Sparrow_-_Pirates_Of_The_Caribbean.jpg"
+            alt="Confusion">
+        {% elif 'i' in name %}
+        <img class="img-fluid" src="../static/images/suspiciousfox.jpg">
+        {% elif 'o' in name%}
+        <img class="img-fluid" src="../static/images/q41y42m1ea171.jpg">
+        {% else %}
+        <img class="img-fluid" src="../static/images/fennec-fox.webp">
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

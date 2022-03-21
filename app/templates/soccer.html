@@ -1,0 +1,39 @@
+{% extends 'components/layout.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col">
+        {% if mcfcg > slg %}
+        <img src="https://images.daznservices.com/di/library/DAZN_News/8/25/mci-mun0603_v33em4l49t1b1vwb6ncgrkdek.jpg?t=1682123279&quality=60&h=450"
+            alt="..." class="img-fluid">
+        {% elif slg == mcfcg %}
+        <h1>The score is tied.</h1>
+        {% else %}
+        {% for i in range(5) %}
+        <h1>:'(</h1>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="col">
+        <h1>{{ manager }}</h1>
+        <h2>{{ headline }}</h2>
+        <h3>The final score was {{ mcfcg }}-{{ slg }} on aggregate.</h3>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                Favorites
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for name in favorites %}
+                {% if 'F' in name %}
+                <li class="list-group-item font-weight-bold">{{ name }}<span class='float-right'>{{ favorites[name]
+                        }}</span></li>
+                {% else %}
+                <li class="list-group-item">{{ name }}<span class='float-right'>{{ favorites[name] }}</span></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
