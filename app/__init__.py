@@ -13,12 +13,18 @@ from .blog.routes import blog
 from .models import db, login
 from flask_migrate import Migrate
 
+# import cors stuff
+from flask_cors import CORS
+
 # define/instantiate our Flask object... aka tell the computer that this is a flask app
 app = Flask(__name__)
 
 # tell this app how it should be configured - over to the config.py file to set up for this!
 app.config.from_object(Config)
 # aka configure our flask app from the Config object we just wrote
+
+# CORS setup
+CORS(app, origins=['*'])
 
 # create link of communication between blueprints and app
 # aka register the blueprints
