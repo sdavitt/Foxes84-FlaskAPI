@@ -8,6 +8,7 @@ from config import Config
 from .auth.routes import auth
 from .api.routes import api
 from .blog.routes import blog
+from .payments.routes import payments
 
 # imports for database stuff + login manager
 from .models import db, login
@@ -31,6 +32,7 @@ CORS(app, origins=['*'])
 app.register_blueprint(auth)
 app.register_blueprint(api)
 app.register_blueprint(blog)
+app.register_blueprint(payments)
 
 # set up our ORM and Migrate connections
 db.init_app(app)
