@@ -99,6 +99,7 @@ class Animal(db.Model):
     description = db.Column(db.String(255), nullable = False)
     image = db.Column(db.String(100))
     price = db.Column(db.Float(2), nullable=False)
+    inventory = db.Column(db.Integer, default=0)
 
     # when a user submits a POST request to create a new animal
     # they'll be sending us a python dictionary
@@ -131,6 +132,7 @@ class Animal(db.Model):
         self.diet = dict.get('diet')
         self.habitat = dict.get('habitat')
         self.lifespan = dict.get('lifespan')
+        self.inventory = dict.get('inventory')
 
     # write a function to translate this object to a dictionary
     # role here is take self and return a dictionary containing K:V pairs for each attribute
@@ -146,7 +148,8 @@ class Animal(db.Model):
             'diet': self.diet,
             'habitat': self.habitat,
             'description': self.description,
-            'lifespan': self.lifespan
+            'lifespan': self.lifespan,
+            'inventory': self.inventory
         }
 
     def from_dict(self, dict):
@@ -173,5 +176,7 @@ class Animal(db.Model):
             self.lifespan = dict['lifespan']
         if dict.get('description'):
             self.description = dict['description']
+        if dict.get('inventory'):
+            self.inventory = dict['inventory']
 
 

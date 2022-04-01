@@ -58,7 +58,8 @@ def createAnimal():
             'weight': <int>,
             'diet': <str>,
             'habitat': <str>,
-            'lifespan': <int>
+            'lifespan': <int>,
+            'inventory': <int>
         }
     """
     # grab any json data from the body of the request made to this route
@@ -91,7 +92,8 @@ def updateAnimal(id):
             'weight': <int>,
             'diet': <str>,
             'habitat': <str>,
-            'lifespan': <int>
+            'lifespan': <int>,
+            'inventory': <int>
         }
     """
     try:
@@ -121,3 +123,29 @@ def removeAnimal(id):
     db.session.delete(animal)
     db.session.commit()
     return jsonify({'Removed animal': animal.to_dict()}), 200
+
+
+@api.route('/inventoryupdate', methods=['POST'])
+def updateInventory():
+    """
+    accept an order and reduce inventory accordingly
+    incoming data: {
+        animals: {
+            <id>: {
+                data: {...},
+                quantity: <int>
+            }
+        },
+        size: <int>,
+        total: <float>
+    }
+    loop through the animals key accessing the id and the quantity
+    """
+    data = request.get_json()
+    for id in data['animals']:
+        a = Animal.query.get(id)
+        a.inventory = a.inventory - data['animals'][id]['quantity']
+        if a.inventory < 0:
+            return jsonify({'Inventory Issue': f'not enough inventory of {a.name}'}), 500
+    db.session.commit()
+    return jsonify({'Inventory': 'update complete'}), 200
